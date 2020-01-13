@@ -14,6 +14,15 @@ return function (App $app) {
         return $response;
     });
 
+    $app->get('/shout/{quote_author}', function (Request $request, Response $response, $args) {
+        $limit = empty($request->getAttributes()['limit']) ? 1 : $request->getAttributes()['limit'];
+        $response->getBody()->write(
+            "Quote Author: {$args['quote_author']}"
+            . " Requested Quotes: {$limit}"
+        );
+        return $response;
+    });
+
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);
         $group->get('/{id}', ViewUserAction::class);
