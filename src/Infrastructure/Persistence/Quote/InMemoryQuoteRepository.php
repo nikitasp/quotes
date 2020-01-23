@@ -43,6 +43,9 @@ class InMemoryQuoteRepository implements QuoteRepository
 
         $quotes = [];
 
+        // just network delay emulation
+        sleep(3);
+
         foreach($this->quotes as $quote) {
             if($quote['author'] == $normalized_author_name){
                 $quotes[] = new Quote($quote['author'], $quote['quote']);

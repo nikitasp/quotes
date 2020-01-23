@@ -14,8 +14,8 @@ class ViewQuotesAction extends QuoteAction
     {
 
         $quoteAuthor = $this->resolveArg('quote_author');
-        $limit = $this->request->getAttributes()['limit'] ?? 1;
-        $quotes = $this->quoteRepository->findQuotesByAuthor($quoteAuthor, $limit);
+        $limit = $this->request->getQueryParams()['limit'] ?? 1;
+        $quotes = $this->quoteCache->findQuotesByAuthor($quoteAuthor, (int) $limit);
 
         $this->logger->info("Quote Author: `$quoteAuthor` was viewed.");
 
