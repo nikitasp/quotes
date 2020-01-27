@@ -7,5 +7,5 @@ use App\Domain\DomainException\DomainRecordNotFoundException;
 
 class QuoteNotFoundException extends DomainRecordNotFoundException
 {
-    public $message = 'There is no quotes for give author :(';
+    public $message = 'There is no quotes for given author :(';
 }
