@@ -21,7 +21,8 @@ class InMemoryQuoteRepository implements QuoteRepository
      */
     public function __construct(array $quotes = null)
     {
-        $this->quotes = $quotes ?? json_decode(file_get_contents('../var/quotes.json'), true)['quotes'];
+        $path_to_json = file_exists('../var') ? '../var/quotes.json' : './var/quotes.json';
+        $this->quotes = $quotes ?? json_decode(file_get_contents($path_to_json), true)['quotes'];
     }
 
     /**
@@ -29,7 +30,13 @@ class InMemoryQuoteRepository implements QuoteRepository
      */
     public function findAll(): array
     {
-        return array_values($this->quotes);
+        $quotes = [];
+
+        foreach($this->quotes as $quote) {
+            $quotes[] = new Quote($quote['author'], $quote['quote']);
+        }
+
+        return $quotes;
     }
 
     /**
@@ -44,7 +51,7 @@ class InMemoryQuoteRepository implements QuoteRepository
         $quotes = [];
 
         // just network delay emulation
-        sleep(3);
+//        sleep(3);
 
         foreach($this->quotes as $quote) {
             if($quote['author'] == $normalized_author_name){

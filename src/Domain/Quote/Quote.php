@@ -30,6 +30,22 @@ class Quote implements JsonSerializable
     /**
      * @return string
      */
+    public function getAuthor(): string
+    {
+        return $this->author;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQuote(): string
+    {
+        return $this->quote;
+    }
+
+    /**
+     * @return string
+     */
     public function jsonSerialize()
     {
         return strtoupper($this->quote);

@@ -38,25 +38,25 @@ class InMemoryQuoteCache implements QuoteCache
     {
         $this->dataProvider = $dataProvider;
         $this->ttl = $ttl;
-        $this->cacheStorePath = '../var/cache/quotes.cache.json';
+        $this->cacheStorePath = file_exists('../var') ? '../var/cache/quotes.cache.json' : './var/cache/quotes.cache.json';
         $this->cacheStore = json_decode(file_get_contents($this->cacheStorePath), true);
     }
 
-    public function __call($methodName, $args): array
+    public function findQuotesByAuthor(string $author, int $limit): array
     {
-        $quotes = $this->get($args[0]);
+        $quotes = $this->get($author);
 
         if(!$quotes)
         {
-            $quotes = call_user_func_array(array($this->dataProvider, $methodName), $args);
+            $this->dataProvider->findQuotesByAuthor($author, $limit);
 
             if( $quotes )
             {
-                $this->set($args[0], $quotes);
+                $this->set($author, $quotes);
             }
         }
 
-        return $quotes;
+        return array_slice($quotes, 0, $limit);
     }
 
     /**

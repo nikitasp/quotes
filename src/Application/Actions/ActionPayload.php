@@ -66,6 +66,14 @@ class ActionPayload implements JsonSerializable
      */
     public function jsonSerialize()
     {
-          return $this->data;
+        $payload = [];
+
+        if ($this->data !== null) {
+            $payload = $this->data;
+        } elseif ($this->error !== null) {
+            $payload['error'] = $this->error;
+        }
+
+        return $payload;
     }
 }
