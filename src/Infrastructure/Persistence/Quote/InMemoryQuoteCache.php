@@ -48,7 +48,7 @@ class InMemoryQuoteCache implements QuoteCache
 
         if(!$quotes)
         {
-            $this->dataProvider->findQuotesByAuthor($author, $limit);
+            $quotes = $this->dataProvider->findQuotesByAuthor($author, $limit);
 
             if( $quotes )
             {
